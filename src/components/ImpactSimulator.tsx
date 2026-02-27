@@ -11,9 +11,10 @@ export default function ImpactSimulator() {
     const valueMultiplier = vehiclePrice / 50000;
     const clicksIncrease = 40;
     const stockReductionDays = Math.min(10 + Math.floor(valueMultiplier * 2.5), 25);
-    // 5% holding cost per year
-    const inventoryCostSaved = Math.round((vehiclePrice * 0.05 / 365) * stockReductionDays);
+    // 8% holding cost (financial depreciation + storage + insurance + capital cost)
+    const inventoryCostSaved = Math.round((vehiclePrice * 0.08 / 365) * stockReductionDays);
     const perceivedValueAdded = Math.round(1500 * valueMultiplier);
+    const totalGain = inventoryCostSaved + perceivedValueAdded;
 
     return (
         <div className="w-full max-w-5xl mx-auto p-[1px] bg-gradient-to-b from-[#222222] to-[#050505] font-sans">
@@ -26,7 +27,7 @@ export default function ImpactSimulator() {
                 <div className="mb-14 text-center relative z-10 flex flex-col items-center">
                     <Crosshair className="text-[#E5A93C] mb-4 opacity-70" size={28} strokeWidth={1.5} />
                     <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter mb-4">
-                        Analyse de de <span className="text-[#E5A93C]">Performance</span>
+                        Analyse de <span className="text-[#E5A93C]">Performance</span>
                     </h2>
                     <p className="text-[#888888] font-medium tracking-wide max-w-lg">
                         Calculez l'impact financier direct d'une captation cinématographique sur votre cycle de vente.
@@ -110,18 +111,22 @@ export default function ImpactSimulator() {
                         <TrendingUp className="text-[#888888] group-hover:text-white mb-6 transition-colors" size={24} strokeWidth={1.5} />
                         <div className="text-4xl font-black text-white mb-2 tracking-tighter">+{perceivedValueAdded.toLocaleString('fr-FR')}<span className="text-xl text-[#888888]">€</span></div>
                         <div className="text-xs font-semibold tracking-wide text-[#888888] uppercase mt-auto">Valeur Perçue</div>
-                        <p className="text-[11px] text-[#555555] mt-2 leading-relaxed">Majoration psychologique du prix de vente justifiée par l'image de marque.</p>
+                        <p className="text-[11px] text-[#555555] mt-2 leading-relaxed">Majoration psychologique du prix de vente justifiée par la qualité d'image.</p>
                     </motion.div>
                 </div>
 
-                <div className="mt-8 border border-[#222222] bg-[#0A0A0A] p-6 flex flex-col sm:flex-row items-start sm:items-center gap-6 relative z-10">
-                    <div className="p-3 bg-[#111111] border border-[#222222]">
-                        <Euro className="text-[#E5A93C]" size={20} strokeWidth={1.5} />
+                <div className="mt-8 border border-[#E5A93C]/30 bg-[#111] p-8 flex flex-col sm:flex-row items-start sm:items-center gap-8 relative z-10 shadow-[0_20px_50px_rgba(229,169,60,0.1)]">
+                    <div className="p-4 bg-[#E5A93C] text-[#050505]">
+                        <Euro size={24} strokeWidth={2.5} />
                     </div>
-                    <div>
-                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#888888] uppercase mb-1">Conclusion Financière</div>
-                        <p className="text-sm text-[#AAAAAA] font-medium leading-relaxed">
-                            La réduction du parc de <span className="text-white font-bold">{stockReductionDays} jours</span> génère une économie mécanique de <span className="text-[#E5A93C] font-bold">{inventoryCostSaved.toLocaleString('fr-FR')} €</span> en frais financiers (BFR). L'investissement vidéo est immédiatement rentabilisé.
+                    <div className="flex-1">
+                        <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E5A93C] mb-2">Gain Global Estimé</div>
+                        <div className="text-3xl font-black text-white tracking-tighter mb-2">
+                            {totalGain.toLocaleString('fr-FR')} € <span className="text-[#E5A93C] text-sm uppercase tracking-widest ml-2">de gain net / véhicule</span>
+                        </div>
+                        <p className="text-xs text-[#888] font-medium leading-relaxed">
+                            Incluant <span className="text-white font-bold">{inventoryCostSaved.toLocaleString('fr-FR')} €</span> de réduction de frais financiers (BFR) et une valorisation de marque immédiate.
+                            L'investissement est rentabilisé plus de <span className="text-white font-bold">{Math.floor(totalGain / 190)}x</span> dès la première vente.
                         </p>
                     </div>
                 </div>
